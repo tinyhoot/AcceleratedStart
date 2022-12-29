@@ -10,6 +10,7 @@ Additionally, the following options can be configured:
 
 - Radio may start repaired
 - Lifepod may start repaired
+- Can start with full health, food and water
 - Option to use one of several loadouts of different starting items, or create your own
 - Configurable lifepod storage size
 
