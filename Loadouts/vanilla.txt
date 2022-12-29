@@ -1,0 +1,4 @@
+# Vanilla settings
+Flare, 2
+FilteredWater, 2
+NutrientBlock, 2

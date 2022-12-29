@@ -1,0 +1,197 @@
+To add your own loadout to the mod, simply create a new .txt file in this folder. Files that start with "HowTo" 
+(such as this one!) are ignored.
+In the file, add each item on its own line. You must use the game's internal name for the item, which may be different
+from the one you are familiar with.
+-------------\
+==> Example:
+Fins
+Seaglide
+DoubleTank
+-------------/
+
+If you want multiple of a certain item, you can add a comma followed by a number after that item on the same line.
+-------------\
+==> Example:
+Battery, 4
+Copper, 12
+-------------/
+
+You can add comments to your file by using '#'. Any line that starts with that character is ignored.
+-------------\
+==> Example:
+Fins
+# This is a comment and ignored by the mod.
+Seaglide
+-------------/
+
+Finally, make sure that the list of things you're trying to add actually fits into the lifepod's inventory! The game
+will stop adding your items as soon as the maximum size is reached.
+
+
+Below you'll find a large list of possible items to add to your loadouts. These have NOT been individually tested so if
+you put in something weird and it breaks the mod or your game just remove it. This is also not an exhaustive list. If a
+specific item that you want is missing the best place to look is that item's page on the Subnautica Wiki, where you can
+find the item's internal name under "Debug Spawn".
+If you make any mistakes or spelling errors that lead to any of your items not being recognised, the mod will show an
+error in the logfile in Subnautica/BepInEx/LogOutput.log, but otherwise do its best to keep going.
+
+-------------\
+Raw Resources |
+-------------/
+Benzene
+Copper
+Diamond
+Fiber
+Glass
+Kyanite
+Lead
+Lithium
+Magnesium
+Nickel
+Quartz
+SeaTreaderPoop
+Silicone
+Silver
+StalkerTooth
+Sulphur
+Titanium
+Uranium
+
+------------------\
+Crafting Materials |
+------------------/
+AdvancedWiringKit
+Aerogel
+Bleach
+ComputerChip
+CopperWire
+EnameledGlass
+FiberMesh
+Lubricant
+PlasteelIngot
+ScrapMetal
+TitaniumIngot
+WiringKit
+
+----------------\
+Tools & Supplies |
+----------------/
+AirBladder
+Battery
+Beacon
+Builder
+Compass
+DoubleTank
+Fins
+FireExtinguisher
+FirstAidKit
+Flare
+Flashlight
+Gravsphere
+HeatBlade
+HighCapacityTank
+JeweledDiskPiece
+Knife
+LaserCutter
+LithiumIonBattery
+MapRoomHUDChip
+Pipe
+PipeSurfaceFloater
+PlasteelTank
+PowerCell
+PropulsionCannon
+RadiationGloves
+RadiationHelmet
+RadiationSuit
+Rebreather
+ReinforcedDiveSuit
+RepulsionCannon
+Scanner
+Seaglide
+StasisRifle
+Stillsuit
+SwimChargeFins
+Tank
+Terraformer
+UltraGlideFins
+Welder
+
+----------\
+Decorative |
+----------/
+Cap1
+Cap2
+PosterAurora
+PosterExosuit1
+PosterExosuit2
+PosterKitty
+
+------------\
+Food & Water |
+------------/
+BigFilteredWater
+Coffee
+CookedBladderfish
+CookedBoomerang
+CookedEyeye
+CookedGarryFish
+CookedHoleFish
+CookedHoopfish
+CookedHoverfish
+CookedLavaBoomerang
+CookedLavaEyeye
+CookedOculus
+CookedPeeper
+CookedReginald
+CookedSpadefish
+CookedSpinefish
+CuredBladderfish
+CuredBoomerang
+CuredEyeye
+CuredGarryFish
+CuredHoleFish
+CuredHoopfish
+CuredHoverfish
+CuredLavaBoomerang
+CuredLavaEyeye
+CuredOculus
+CuredPeeper
+CuredReginald
+CuredSpadefish
+CuredSpinefish
+DisinfectedWater
+FilteredWater
+NutrientBlock
+Snack1
+Snack2
+Snack3
+StillsuitWater
+
+--------------------\
+Friends & Companions |
+--------------------/
+BonesharkEgg
+CrabsnakeEgg
+CrabsquidEgg
+CrashEgg
+CutefishEgg
+GasopodEgg
+GenericEgg
+GrandReefsEgg
+GrassyPlateausEgg
+JellyrayEgg
+JumperEgg
+KelpForestEgg
+KooshZoneEgg
+LavaLizardEgg
+LavaZoneEgg
+MesmerEgg
+MushroomForestEgg
+RabbitrayEgg
+ReefbackEgg
+SafeShallowsEgg
+SandsharkEgg
+ShockerEgg
+SpadefishEgg
+StalkerEgg
+TwistyBridgesEgg

@@ -1,0 +1,23 @@
+# The original default Accelerated Start loadout
+# These are vanilla items.
+Flare, 2
+FilteredWater, 2
+NutrientBlock, 2
+# Actual additions start here.
+Builder
+Knife
+Tank
+Fins
+Flashlight
+Scanner
+Rebreather
+Welder
+Battery, 4
+Quartz, 4
+Copper
+Gold
+JeweledDiskPiece
+Titanium, 10
+RadiationGloves
+RadiationSuit
+RadiationHelmet

@@ -1,0 +1,12 @@
+# Real Alterra by FatherSarge
+Knife
+Flashlight
+Scanner
+Welder
+LaserCutter
+Builder
+Battery, 7
+Flare, 4
+FilteredWater, 4
+NutrientBlock, 4
+FirstAidKit, 4

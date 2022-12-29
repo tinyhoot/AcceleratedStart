@@ -1,0 +1,13 @@
+# Realistic Survival by SilverThorn12345
+Knife
+Flashlight
+Scanner
+Welder
+LaserCutter
+Compass
+RepulsionCannon
+Builder
+Flare, 2
+Battery, 6
+BigFilteredWater, 8
+NutrientBlock, 8
