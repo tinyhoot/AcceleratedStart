@@ -7,6 +7,7 @@ namespace AcceleratedStart
     {
         public bool bFixLifepod = true;
         public bool bFixRadio = true;
+        public bool bStartHealed = true;
         public bool bUseDefaultLoadout = true;
         public string sCurrentLoadout = "default";
         public string sLifepodInventorySize = "large";

@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using SMLHelper.V2.Handlers;
 
 namespace AcceleratedStart.Patches
 {
@@ -32,8 +33,17 @@ namespace AcceleratedStart.Patches
                 __instance.GetComponent<LiveMixin>().ResetHealth();
                 __instance.UpdateDamagedEffects();
             }
-            // Start with no health lost.
-            Player.main.GetComponent<LiveMixin>().ResetHealth();
+            // Start with no health or food lost.
+            if (Initialiser._config.bStartHealed)
+            {
+                Player.main.GetComponent<LiveMixin>().ResetHealth();
+                Survival survival = Player.main.GetComponent<Survival>();
+                if (survival != null)
+                {
+                    survival.food = 100f;
+                    survival.water = 100f;
+                }
+            }
         }
 
         [HarmonyPrefix]

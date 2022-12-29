@@ -14,6 +14,7 @@ namespace AcceleratedStart
         // IDs for each option in the mod menu.
         private const string FixLifepod = "FixLifepod";
         private const string FixRadio = "FixRadio";
+        private const string HealPlayer = "HealPlayer";
         private const string UseLoadout = "UseLoadout";
         private const string CurrentLoadout = "CurrentLoadout";
         private const string PodInventorySize = "LifepodInventorySize";
@@ -32,6 +33,7 @@ namespace AcceleratedStart
         {
             AddToggleOption(FixLifepod, "Fix Lifepod", Config.bFixLifepod);
             AddToggleOption(FixRadio, "Fix Radio", Config.bFixRadio);
+            AddToggleOption(HealPlayer, "Full Health/Food", Config.bStartHealed);
             AddToggleOption(UseLoadout, "Use loadouts", Config.bUseDefaultLoadout);
 
             // Add dynamic choices based on the files in the loadout directory.
@@ -74,6 +76,9 @@ namespace AcceleratedStart
                     break;
                 case FixRadio:
                     Config.bFixRadio = args.Value;
+                    break;
+                case HealPlayer:
+                    Config.bStartHealed = args.Value;
                     break;
                 case UseLoadout:
                     Config.bUseDefaultLoadout = args.Value;
