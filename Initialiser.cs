@@ -14,13 +14,14 @@ namespace AcceleratedStart
     {
         public const string GUID = "com.github.tinyhoot.AcceleratedStart";
         public const string NAME = "Accelerated Start";
-        public const string VERSION = "2.0.0";
-        internal static readonly ManualLogSource _log = BepInEx.Logging.Logger.CreateLogSource(NAME);
+        public const string VERSION = "2.0.1";
+        internal static ManualLogSource _log;
         internal static Config _config;
         internal static Dictionary<string, List<TechType>> _loadouts;
         
         public void Awake()
         {
+            _log = Logger;
             // Parse all loadouts from their directory.
             _loadouts = LoadoutParser.ParseLoadouts(GetLoadoutDirectory());
             _log.LogInfo($"Loaded {_loadouts.Count} loadouts.");

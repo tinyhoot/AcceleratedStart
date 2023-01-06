@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using SMLHelper.V2.Handlers;
+using Story;
 
 namespace AcceleratedStart.Patches
 {
@@ -53,6 +53,8 @@ namespace AcceleratedStart.Patches
             // Skip lifepod exit cinematics.
             EscapePod.main.bottomHatchUsed = true;
             EscapePod.main.topHatchUsed = true;
+            // Without this, no radio messages will ever play. Usually gets set during lifepod exit animation.
+            StoryGoal.Execute("Goal_Lifepod2", Story.GoalType.Story);
 
             return true;
         }
