@@ -37,12 +37,34 @@
     <OutputPath>bin\x64\Debug\</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>mkdir $(SUBNAUTICA_DIR)/BepInEx/plugins/AcceleratedStart
-cp $(OutDir)AcceleratedStart.dll $(SUBNAUTICA_DIR)/BepInEx/plugins/AcceleratedStart
-mkdir $(SUBNAUTICA_DIR)/BepInEx/plugins/AcceleratedStart/Loadouts
-cp $(SolutionDir)Loadouts/* $(SUBNAUTICA_DIR)/BepInEx/plugins/AcceleratedStart/Loadouts</PostBuildEvent>
-  </PropertyGroup>
+  
+  <!-- Define important extra files needed in the final distribution. -->
+  <ItemGroup>
+    <DataFiles Include="$(SolutionDir)\Loadouts\*" />
+  </ItemGroup>
+
+  <!-- Copy newly built files to the game directory. -->
+  <Target Name="CopyToGameFolder" AfterTargets="Build">
+    <Message Importance="high" Text="Copying files to game directory." />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SUBNAUTICA_DIR)\BepInEx\plugins\$(AssemblyName)" />
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(SUBNAUTICA_DIR)\BepInEx\plugins\$(AssemblyName)\Loadouts" />
+  </Target>
+
+  <!-- Automatically create the zip file, ready for distribution. -->
+  <Target Name="PrepareZip" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Message Importance="normal" Text="Copying files to temporary directory." />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(OutputPath)\zipper\plugins\$(AssemblyName)" />
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(OutputPath)\zipper\plugins\$(AssemblyName)\DataFiles" />
+  </Target>
+  <Target Name="CreateZip" AfterTargets="PrepareZip" Condition="'$(Configuration)' == 'Release'">
+    <Message Importance="high" Text="Zipping project for distribution." />
+    <ZipDirectory DestinationFile="$(OutputPath)\$(AssemblyName).zip" SourceDirectory="$(OutputPath)\zipper" Overwrite="true" />
+  </Target>
+  <Target Name="Cleanup" AfterTargets="CreateZip" Condition="'$(Configuration)' == 'Release'">
+    <Message Importance="normal" Text="Cleaning up." />
+    <RemoveDir Directories="$(OutputPath)\zipper" />
+  </Target>
+  
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>Dependencies\0Harmony.dll</HintPath>
@@ -60,9 +82,8 @@ cp $(SolutionDir)Loadouts/* $(SUBNAUTICA_DIR)/BepInEx/plugins/AcceleratedStart/L
       <HintPath>Dependencies\BepInEx.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="SMLHelper">
-      <HintPath>Dependencies\SMLHelper.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Nautilus">
+      <HintPath>Dependencies\Nautilus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

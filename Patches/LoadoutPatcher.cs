@@ -11,7 +11,7 @@ namespace AcceleratedStart.Patches
         public static bool ChangeStartingSupplies(ref LootSpawner __instance)
         {
             List<TechType> loadout = Initialiser.GetActiveLoadout();
-            if (loadout is null || !Initialiser._config.bUseDefaultLoadout)
+            if (loadout is null || !Initialiser._config.UseLoadouts.Value)
                 return true;
             
             __instance.escapePodTechTypes.Clear();
@@ -24,7 +24,7 @@ namespace AcceleratedStart.Patches
         public static void ExpandPodInventory(ref EscapePod __instance)
         {
             int[] size = Initialiser._config._inventorySizes
-                .GetOrDefault(Initialiser._config.sLifepodInventorySize, new[] { 4, 8 });
+                .GetOrDefault(Initialiser._config.LifepodInventorySize.Value, new[] { 4, 8 });
             __instance.storageContainer.container.Resize(size[0], size[1]);
         }
     }

@@ -11,7 +11,7 @@ namespace AcceleratedStart.Patches
         public static bool FixRadio()
         {
             // If the radio should start fixed, skip the method and never damage it in the first place.
-            return !Initialiser._config.bFixRadio;
+            return !Initialiser._config.FixRadio.Value;
         }
         
         [HarmonyPostfix]
@@ -28,13 +28,13 @@ namespace AcceleratedStart.Patches
         [HarmonyPatch(typeof(EscapePod), nameof(EscapePod.StopIntroCinematic))]
         public static void PatchIntro(ref EscapePod __instance)
         {
-            if (Initialiser._config.bFixLifepod)
+            if (Initialiser._config.FixLifepod.Value)
             {
                 __instance.GetComponent<LiveMixin>().ResetHealth();
                 __instance.UpdateDamagedEffects();
             }
             // Start with no health or food lost.
-            if (Initialiser._config.bStartHealed)
+            if (Initialiser._config.StartHealed.Value)
             {
                 Player.main.GetComponent<LiveMixin>().ResetHealth();
                 Survival survival = Player.main.GetComponent<Survival>();
