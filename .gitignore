@@ -1,4 +1,7 @@
 .idea
 bin
 obj
+packages
+Releases
 AcceleratedStart.sln.DotSettings.user
+GameDirectory.targets

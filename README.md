@@ -16,17 +16,14 @@ Additionally, the following options can be configured:
 
 ## How to Use
 1. Install [BepInEx](https://www.nexusmods.com/subnautica/mods/1108)
-2. Install [SMLHelper](https://www.nexusmods.com/subnautica/mods/113)
-3. Extract this mod into your Subnautica/BepInEx/plugins folder
+2. Install [Nautilus](https://www.nexusmods.com/subnautica/mods/1262)
+3. Extract this mod into your `Subnautica/BepInEx/plugins` folder
 4. Enjoy!
 
 ## How to Build
-* git clone
-* Add a SUBNAUTICA_DIR variable to your PATH pointing to your install directory of Subnautica
-* Install BepInEx and SMLHelper
-* Copy all dependencies to the project's empty `Dependencies` folder. This includes:
-  * BepInEx
-  * SMLHelper
-  * Several Unity assemblies from the game folder
-  * Publicised versions of Subnautica's `Assembly-CSharp.dll`. Start the game once using [the BepinEx publiciser](https://github.com/MrPurple6411/Bepinex-Tools/releases/) to generate them.
-* Building in the Release configuration should leave you with a `SubnauticaRandomiser.dll` in `SubnauticaRandomiser/bin/Release/` and automatically update the installed version in `$SUBNAUTICA_DIR/BepInEx/plugins`
+* `git clone --recurse-submodules [link-to-this-repository]`
+* Add a `GameDirectory.targets` file to the root directory with a `GameDirectory` property pointing to your install directory of Subnautica.
+  An example file can be found [here](https://github.com/tinyhoot/HootLib-Subnautica/blob/main/HootLib/Example_GameDirectory.targets).
+* Load the project in an IDE of your choice
+* Building in the Debug configuration will leave you with the ready-made .dll in `./bin/Debug/` and also automatically update the installed version in the `Subnautica/BepinEx/plugins` directory
+* Building in the Release configuration will additionally generate a .zip archive ready for distribution in `./bin/Release/`

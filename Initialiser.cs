@@ -4,21 +4,21 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using SMLHelper.V2.Handlers;
+using HootLib;
 
 namespace AcceleratedStart
 {
     [BepInPlugin(GUID, NAME, VERSION)]
-    [BepInDependency("com.ahk1221.smlhelper", "2.15")]
+    [BepInDependency("com.snmodding.nautilus", "1.0")]
     public class Initialiser : BaseUnityPlugin
     {
         public const string GUID = "com.github.tinyhoot.AcceleratedStart";
         public const string NAME = "Accelerated Start";
-        public const string VERSION = "2.0.1";
+        public const string VERSION = "2.0.2";
         internal static ManualLogSource _log;
         internal static Config _config;
         internal static Dictionary<string, List<TechType>> _loadouts;
-        
+
         public void Awake()
         {
             _log = Logger;
@@ -26,14 +26,13 @@ namespace AcceleratedStart
             _loadouts = LoadoutParser.ParseLoadouts(GetLoadoutDirectory());
             _log.LogInfo($"Loaded {_loadouts.Count} loadouts.");
             // Build the in-game mod menu.
-            ConfigModOptions modOptions = new ConfigModOptions(NAME);
-            OptionsPanelHandler.RegisterModOptions(modOptions);
-            _config = modOptions.Config;
-            
+            _config = new Config(Hootils.GetConfigFilePath(NAME), Info.Metadata);
+            _config.RegisterModOptions(NAME);
+
             var harmony = new Harmony(GUID);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
-        
+
         /// <summary>
         /// Get the selected loadout from the config.
         /// </summary>
@@ -42,17 +41,12 @@ namespace AcceleratedStart
         {
             if (_loadouts is null || _loadouts.Count == 0)
                 return null;
-            return _loadouts.GetOrDefault(_config.sCurrentLoadout, null);
+            return _loadouts.GetOrDefault(_config.CurrentLoadout.Value, null);
         }
 
         internal static string GetLoadoutDirectory()
         {
-            return Path.Combine(GetModDirectory(), "Loadouts");
-        }
-        
-        internal static string GetModDirectory()
-        {
-            return new FileInfo(Assembly.GetExecutingAssembly().Location).Directory?.FullName;
+            return Path.Combine(Hootils.GetModDirectory(), "Loadouts");
         }
     }
 }
