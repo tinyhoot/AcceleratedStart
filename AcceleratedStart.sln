@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcceleratedStart", "AcceleratedStart.csproj", "{FAA17456-E04D-46EB-88C5-D200D39D8CDB}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HootLib", "HootLib-Subnautica\HootLib\HootLib.shproj", "{A1EF0757-EDA8-41DC-89D4-C41D81427D00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
