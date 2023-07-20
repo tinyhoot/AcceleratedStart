@@ -73,9 +73,13 @@ namespace AcceleratedStart
                 nameof(CurrentLoadout),
                 "default",
                 "The filename of the loadout you will start the game with. "
-                + "Do not include extensions in this name. Example:"
+                + "Do not include extensions in this name.\n"
+                + "Example:\n"
                 + "default.txt --> default",
                 new AcceptableValueList<string>(choices)
+            ).WithDescription(
+                "Current Loadout",
+                "The name of the loadout you'll start the game with."
             );
         }
 

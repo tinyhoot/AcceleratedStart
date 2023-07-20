@@ -26,7 +26,7 @@ namespace AcceleratedStart
             _loadouts = LoadoutParser.ParseLoadouts(GetLoadoutDirectory());
             _log.LogInfo($"Loaded {_loadouts.Count} loadouts.");
             // Build the in-game mod menu.
-            _config = new Config(Hootils.GetConfigFileName(NAME), Info.Metadata);
+            _config = new Config(Hootils.GetConfigFilePath(NAME), Info.Metadata);
             _config.RegisterModOptions(NAME);
 
             var harmony = new Harmony(GUID);
