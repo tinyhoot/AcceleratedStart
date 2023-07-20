@@ -14,7 +14,7 @@ namespace AcceleratedStart
     {
         public const string GUID = "com.github.tinyhoot.AcceleratedStart";
         public const string NAME = "Accelerated Start";
-        public const string VERSION = "2.0.1";
+        public const string VERSION = "2.0.2";
         internal static ManualLogSource _log;
         internal static Config _config;
         internal static Dictionary<string, List<TechType>> _loadouts;
