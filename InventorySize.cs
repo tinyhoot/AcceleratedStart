@@ -22,8 +22,8 @@ namespace AcceleratedStart
             return size switch
             {
                 InventorySize.Tiny => new Vector2(4, 4),
-                InventorySize.Small => new Vector2(5, 6),
-                InventorySize.Vanilla => new Vector2(6, 8),
+                InventorySize.Small => new Vector2(4, 6),
+                InventorySize.Vanilla => new Vector2(4, 8),
                 InventorySize.Large => new Vector2(6, 10),
                 InventorySize.Huge => new Vector2(8, 10),
                 _ => throw new ArgumentOutOfRangeException(nameof(size), $"Value not valid for enum: {size}")

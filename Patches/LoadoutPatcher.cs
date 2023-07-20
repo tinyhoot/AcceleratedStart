@@ -24,8 +24,17 @@ namespace AcceleratedStart.Patches
         [HarmonyPatch(typeof(EscapePod), nameof(EscapePod.Awake))]
         public static void ExpandPodInventory(ref EscapePod __instance)
         {
+            var podContainer = __instance.storageContainer.container;
+            Vector2 vanilla = InventorySize.Vanilla.GetSize();
+            if (podContainer.sizeX != (int)vanilla.x || podContainer.sizeY != (int)vanilla.y)
+            {
+                Initialiser._log.LogInfo($"Modified lifepod inventory size detected "
+                                         + $"({podContainer.sizeX} x {podContainer.sizeY}), probably from another mod. "
+                                         + "Skipping storage size changes for mod compatibility.");
+                return;
+            }
             Vector2 size = Initialiser._config.LifepodInventorySize.Value.GetSize();
-            __instance.storageContainer.container.Resize((int)size.x, (int)size.y);
+            podContainer.Resize((int)size.x, (int)size.y);
         }
     }
 }
