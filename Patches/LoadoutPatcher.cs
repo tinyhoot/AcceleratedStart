@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarmonyLib;
+using UnityEngine;
 
 namespace AcceleratedStart.Patches
 {
@@ -23,9 +24,8 @@ namespace AcceleratedStart.Patches
         [HarmonyPatch(typeof(EscapePod), nameof(EscapePod.Awake))]
         public static void ExpandPodInventory(ref EscapePod __instance)
         {
-            int[] size = Initialiser._config._inventorySizes
-                .GetOrDefault(Initialiser._config.LifepodInventorySize.Value, new[] { 4, 8 });
-            __instance.storageContainer.container.Resize(size[0], size[1]);
+            Vector2 size = Initialiser._config.LifepodInventorySize.Value.GetSize();
+            __instance.storageContainer.container.Resize((int)size.x, (int)size.y);
         }
     }
 }

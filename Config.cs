@@ -1,43 +1,64 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BepInEx;
 using BepInEx.Configuration;
+using HootLib.Configuration;
+using Nautilus.Handlers;
+using UnityEngine;
 
 namespace AcceleratedStart
 {
-    internal class Config
+    internal class Config : HootConfig
     {
-        public ConfigEntry<bool> FixLifepod;
-        public ConfigEntry<bool> FixRadio;
-        public ConfigEntry<bool> StartHealed;
-        public ConfigEntry<bool> UseLoadouts;
-        public ConfigEntry<string> CurrentLoadout;
+        public const string SectionLoadouts = "Loadouts";
+        public const string SectionPatches = "Patches";
+        
+        public ConfigEntryWrapper<bool> FixLifepod;
+        public ConfigEntryWrapper<bool> FixRadio;
+        public ConfigEntryWrapper<bool> StartHealed;
+        public ConfigEntryWrapper<bool> UseLoadouts;
+        public ConfigEntryWrapper<string> CurrentLoadout;
 
-        public ConfigEntry<string> LifepodInventorySize;
+        public ConfigEntryWrapper<InventorySize> LifepodInventorySize;
 
-        // All valid options for lifepod inventory sizes.
-        internal readonly Dictionary<string, int[]> _inventorySizes = new Dictionary<string, int[]>
+        public Config(ConfigFile configFile) : base(configFile) { }
+        public Config(string path, BepInPlugin metadata) : base(path, metadata) { }
+        
+        protected override void RegisterOptions()
         {
-            { "tiny", new[] { 4, 4 } },
-            { "small", new[] { 4, 6 } },
-            { "default", new[] { 4, 8 } },
-            { "large", new[] { 6, 10 } },
-            { "huge", new[] { 8, 10 } },
-        };
+            FixLifepod = RegisterEntry(
+                SectionPatches,
+                nameof(FixLifepod),
+                true,
+                "If enabled, start with the lifepod already repaired."
+            );
+            FixRadio = RegisterEntry(
+                SectionPatches,
+                nameof(FixRadio),
+                true,
+                "If enabled, start with the radio already repaired."
+            );
+            StartHealed = RegisterEntry(
+                SectionPatches,
+                nameof(StartHealed),
+                true,
+                "If enabled, start at full health."
+            );
+            LifepodInventorySize = RegisterEntry(
+                SectionPatches,
+                nameof(LifepodInventorySize),
+                InventorySize.Vanilla,
+                "With loadouts, the required inventory size can quickly spiral out of control. This setting "
+                + "controls how large the inventory of the small lifepod storage is."
+            ).WithChoiceOptionStringsOverride(GetLifepodSizeDescription());
 
-        public void RegisterOptions(ConfigFile config)
-        {
-            FixLifepod = config.Bind("Patches", "FixLifepod", true,
-                "If enabled, start with the lifepod already repaired.");
-            FixRadio = config.Bind("Patches", "FixRadio", true, "If enabled, start with the radio already repaired.");
-            StartHealed = config.Bind("Patches", "StartHealed", true, "If enabled, start at full health.");
-            var invDesc = new ConfigDescription("Change the size of the lifepod inventory.",
-                new AcceptableValueList<string>(_inventorySizes.Keys.ToArray()));
-            LifepodInventorySize = config.Bind("Patches", "LifepodInventorySize", "large",
-                invDesc);
-
-            UseLoadouts = config.Bind("Loadout", "UseLoadouts", false,
-                "Loadouts are only used if this option is enabled.");
+            UseLoadouts = RegisterEntry(
+                SectionLoadouts,
+                nameof(UseLoadouts),
+                false,
+                "Loadouts are only used if this option is enabled."
+            );
 
             // Dynamically generate the available options for loadouts based on the files in the directory.
             string[] choices = Initialiser._loadouts.Keys.ToArray();
@@ -47,21 +68,42 @@ namespace AcceleratedStart
                 choices = new[] { "No loadouts in directory!" };
             }
 
-            var loadoutDesc = new ConfigDescription("The filename of the loadout you will start the game with."
-                                                    + "Do not include extensions in this name. Example:"
-                                                    + "default.txt --> default",
-                new AcceptableValueList<string>(choices));
-            CurrentLoadout = config.Bind("Loadout", "CurrentLoadout", "default", loadoutDesc);
+            CurrentLoadout = RegisterEntry(
+                SectionLoadouts,
+                nameof(CurrentLoadout),
+                "default",
+                "The filename of the loadout you will start the game with. "
+                + "Do not include extensions in this name. Example:"
+                + "default.txt --> default",
+                new AcceptableValueList<string>(choices)
+            );
         }
 
-        public int GetLoadoutIndex()
-        {
-            string[] choices = Initialiser._loadouts.Keys.ToArray();
-            int index = Math.Max(0, Array.IndexOf(choices, CurrentLoadout));
-            if (choices.Length == 0)
-                index = 0;
+        protected override void RegisterControllingOptions() { }
 
-            return index;
+        public override void RegisterModOptions(string name, Transform separatorParent = null)
+        {
+            var modOptions = new HootModOptions(name, this, separatorParent);
+            modOptions.AddItem(FixLifepod.ToModToggleOption(modOptions));
+            modOptions.AddItem(FixRadio.ToModToggleOption(modOptions));
+            modOptions.AddItem(StartHealed.ToModToggleOption(modOptions));
+            modOptions.AddItem(LifepodInventorySize.ToModChoiceOption(modOptions));
+            modOptions.AddItem(UseLoadouts.ToModToggleOption(modOptions));
+            modOptions.AddItem(CurrentLoadout.ToModChoiceOption(modOptions));
+            
+            OptionsPanelHandler.RegisterModOptions(modOptions);
+        }
+
+        private string[] GetLifepodSizeDescription()
+        {
+            List<string> descriptions = new List<string>();
+            foreach (var value in Enum.GetValues(typeof(InventorySize)))
+            {
+                Vector2 size = ((InventorySize)value).GetSize();
+                descriptions.Add($"{value} ({size.x} x {size.y})");
+            }
+
+            return descriptions.ToArray();
         }
     }
 }

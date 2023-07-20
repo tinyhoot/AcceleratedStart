@@ -4,7 +4,7 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using Nautilus.Handlers;
+using HootLib;
 
 namespace AcceleratedStart
 {
@@ -26,10 +26,8 @@ namespace AcceleratedStart
             _loadouts = LoadoutParser.ParseLoadouts(GetLoadoutDirectory());
             _log.LogInfo($"Loaded {_loadouts.Count} loadouts.");
             // Build the in-game mod menu.
-            _config = new Config();
-            _config.RegisterOptions(Config);
-            ConfigModOptions modOptions = new ConfigModOptions(NAME);
-            OptionsPanelHandler.RegisterModOptions(modOptions);
+            _config = new Config(Hootils.GetConfigFileName(NAME), Info.Metadata);
+            _config.RegisterModOptions(NAME);
 
             var harmony = new Harmony(GUID);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
@@ -48,12 +46,7 @@ namespace AcceleratedStart
 
         internal static string GetLoadoutDirectory()
         {
-            return Path.Combine(GetModDirectory(), "Loadouts");
-        }
-        
-        internal static string GetModDirectory()
-        {
-            return new FileInfo(Assembly.GetExecutingAssembly().Location).Directory?.FullName;
+            return Path.Combine(Hootils.GetModDirectory(), "Loadouts");
         }
     }
 }
