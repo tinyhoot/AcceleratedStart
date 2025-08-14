@@ -1,7 +1,9 @@
-.idea
-bin
-obj
+/.idea/
+/.vs/
+/.vscode/
+**/bin
+**/obj
 packages
 Releases
 AcceleratedStart.sln.DotSettings.user
-GameDirectory.targets
+**/GameDirectory.targets

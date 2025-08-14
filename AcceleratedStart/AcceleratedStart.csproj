@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>8</LangVersion>
+    <Nullable>warnings</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Subnautica.Nautilus" Version="1.0.0-pre.42" PrivateAssets="All" />
+  </ItemGroup>
+  <Import Project="..\HootLib-Subnautica\HootLib\HootLib.projitems" Label="Shared" />
+</Project>

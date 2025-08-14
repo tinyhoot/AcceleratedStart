@@ -32,6 +32,7 @@ namespace AcceleratedStart
                 true,
                 "If enabled, start with the lifepod already repaired."
             );
+            
             FixRadio = RegisterEntry(
                 SectionPatches,
                 nameof(FixRadio),
