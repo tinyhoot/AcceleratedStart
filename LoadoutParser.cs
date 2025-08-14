@@ -15,8 +15,8 @@ namespace AcceleratedStart
             foreach (string filePath in Directory.GetFiles(directory))
             {
                 string fileName = Path.GetFileNameWithoutExtension(filePath);
-                // Skip the tutorial file.
-                if (fileName.StartsWith("HowTo"))
+                // Skip the tutorial file and the special vortex mod manager file.
+                if (fileName.StartsWith("HowTo") || fileName == "__folder_managed_by_vortex")
                     continue;
                 Initialiser._log.LogDebug($"Parsing loadout {fileName}");
                 try
