@@ -4,7 +4,6 @@ using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
 using HootLib.Configuration;
-using Nautilus.Handlers;
 using UnityEngine;
 
 namespace AcceleratedStart
@@ -85,17 +84,14 @@ namespace AcceleratedStart
 
         protected override void RegisterControllingOptions() { }
 
-        public override void RegisterModOptions(string name, Transform separatorParent = null)
+        protected override void RegisterModOptions(HootModOptions modOptions)
         {
-            var modOptions = new HootModOptions(name, this, separatorParent);
-            modOptions.AddItem(FixLifepod.ToModToggleOption(modOptions));
-            modOptions.AddItem(FixRadio.ToModToggleOption(modOptions));
-            modOptions.AddItem(StartHealed.ToModToggleOption(modOptions));
-            modOptions.AddItem(LifepodInventorySize.ToModChoiceOption(modOptions));
-            modOptions.AddItem(UseLoadouts.ToModToggleOption(modOptions));
-            modOptions.AddItem(CurrentLoadout.ToModChoiceOption(modOptions));
-            
-            OptionsPanelHandler.RegisterModOptions(modOptions);
+            modOptions.AddItem(FixLifepod.ToModToggleOption());
+            modOptions.AddItem(FixRadio.ToModToggleOption());
+            modOptions.AddItem(StartHealed.ToModToggleOption());
+            modOptions.AddItem(LifepodInventorySize.ToModChoiceOption());
+            modOptions.AddItem(UseLoadouts.ToModToggleOption());
+            modOptions.AddItem(CurrentLoadout.ToModChoiceOption());
         }
 
         private string[] GetLifepodSizeDescription()

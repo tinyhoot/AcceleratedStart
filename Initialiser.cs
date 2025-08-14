@@ -9,12 +9,12 @@ using HootLib;
 namespace AcceleratedStart
 {
     [BepInPlugin(GUID, NAME, VERSION)]
-    [BepInDependency("com.snmodding.nautilus", "1.0")]
+    [BepInDependency("com.snmodding.nautilus", "1.0.0.42")]
     public class Initialiser : BaseUnityPlugin
     {
         public const string GUID = "com.github.tinyhoot.AcceleratedStart";
         public const string NAME = "Accelerated Start";
-        public const string VERSION = "2.0.2";
+        public const string VERSION = "2.1.0";
         internal static ManualLogSource _log;
         internal static Config _config;
         internal static Dictionary<string, List<TechType>> _loadouts;
@@ -27,7 +27,8 @@ namespace AcceleratedStart
             _log.LogInfo($"Loaded {_loadouts.Count} loadouts.");
             // Build the in-game mod menu.
             _config = new Config(Hootils.GetConfigFilePath(NAME), Info.Metadata);
-            _config.RegisterModOptions(NAME);
+            _config.Setup();
+            _config.CreateModMenu(NAME);
 
             var harmony = new Harmony(GUID);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
